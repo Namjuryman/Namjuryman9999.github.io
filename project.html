@@ -2,14 +2,102 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>项目展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的项目时间轴</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #f4f4f4; }
-        nav { background-color: #333; overflow: hidden; padding: 10px 20px; }
+        /* --- 基础设置 --- */
+        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #f4f4f4; color: #333; }
+        
+        /* --- 导航栏 (保持不变) --- */
+        nav { background-color: #333; overflow: hidden; padding: 10px 20px; position: sticky; top: 0; z-index: 1000; }
         nav a { float: left; display: block; color: white; padding: 14px 16px; text-decoration: none; font-size: 18px; }
         nav a:hover { background-color: #ddd; color: black; }
-        .container { padding: 20px; max-width: 800px; margin: 20px auto; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .project-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+
+        /* --- 时间轴核心样式 --- */
+        .timeline-area {
+            position: relative;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* 绘制中间的那条竖线 */
+        .timeline-area::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #333; /* 线条颜色 */
+            top: 0;
+            bottom: 0;
+            left: 50%; /* 居中 */
+            margin-left: -3px;
+        }
+
+        /* 项目容器 */
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%; /* 占据一半宽度 */
+            box-sizing: border-box;
+        }
+
+        /* 左边的项目 */
+        .left { left: 0; }
+        /* 右边的项目 */
+        .right { left: 50%; }
+
+        /* 时间轴上的圆点 */
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px; /* 左侧圆点位置 */
+            background-color: white;
+            border: 4px solid #FF9F55; /* 圆点颜色 */
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        /* 修正右侧圆点位置 */
+        .right::after { left: -10px; }
+
+        /* --- 卡片内容样式 --- */
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 阴影效果 */
+            transition: transform 0.3s ease; /* 添加一点动画 */
+        }
+
+        .content:hover {
+            transform: scale(1.02); /* 鼠标放上去会稍微放大 */
+        }
+
+        /* 年份标题 */
+        h2 { margin-top: 0; color: #333; font-size: 24px; }
+        
+        /* 详情折叠功能 */
+        details { cursor: pointer; }
+        summary {
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+            list-style: none; /* 隐藏默认三角 */
+        }
+        summary::after { content: " 👇 点击查看详情"; font-size: 14px; }
+        details[open] summary::after { content: " 👆 收起"; }
+        
+        /* 手机端适配 (非常重要，否则手机上会乱) */
+        @media screen and (max-width: 600px) {
+            .timeline-area::after { left: 31px; } /* 线条移到左边 */
+            .container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .container::after { left: 21px; } /* 圆点移到左边 */
+            .right { left: 0%; } /* 右侧元素回归左侧对齐 */
+        }
     </style>
 </head>
 <body>
@@ -20,18 +108,52 @@
         <a href="project.html">🚀 项目展示</a>
     </nav>
 
-    <div class="container">
-        <h1>我的项目作品</h1>
-        
-        <div class="project-card">
-            <h3>项目 1：我的个人网站</h3>
-            <p>这是我利用 GitHub Pages 搭建的第一个静态网站。</p>
+    <div class="timeline-area">
+
+        <div class="container right">
+            <div class="content">
+                <h2>2026</h2>
+                <h3>未来规划项目</h3>
+                <p>探索 AI 与人类协作的新模式。</p>
+                <details>
+                    <summary>了解更多</summary>
+                    <hr>
+                    <p>这里是详细描述：<br>
+                    我计划在 2026 年启动这个项目...<br>
+                    使用的技术栈包括 Python, Transformers 等。</p>
+                    <img src="https://via.placeholder.com/400x200" alt="示例图" style="width:100%; border-radius:5px;">
+                </details>
+            </div>
         </div>
 
-        <div class="project-card">
-            <h3>项目 2：待补充...</h3>
-            <p>这里可以放你的其他作品介绍。</p>
+        <div class="container left">
+            <div class="content">
+                <h2>2024</h2>
+                <h3>个人网站搭建</h3>
+                <p>从零开始学习 GitHub Pages 建站。</p>
+                <details>
+                    <summary>了解更多</summary>
+                    <hr>
+                    <p>通过学习 HTML 和 CSS，我成功搭建了自己的第一个静态网站。<br>
+                    解决了 404 错误，学会了嵌入 PDF。</p>
+                </details>
+            </div>
         </div>
+
+        <div class="container right">
+            <div class="content">
+                <h2>2023</h2>
+                <h3>大学毕业设计</h3>
+                <p>基于数据分析的用户行为研究。</p>
+                <details>
+                    <summary>了解更多</summary>
+                    <hr>
+                    <p>这是我的本科毕业设计项目。<br>
+                    主要针对电商平台的用户习惯进行了建模分析。</p>
+                </details>
+            </div>
+        </div>
+
     </div>
 
 </body>
