@@ -1,1 +1,65 @@
-<h1>你好，世界！这是我的第一个个人网站。</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namjuryman 的个人主页</title>
+    <style>
+        /* 这里是CSS样式，用来控制网页长什么样 */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* 背景也是灰白色 */
+            color: #333;
+        }
+        
+        /* 导航栏样式 */
+        nav {
+            background-color: #333; /* 黑色背景 */
+            overflow: hidden;
+            padding: 10px 20px;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white; /* 文字白色 */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none; /* 去掉下划线 */
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            background-color: #ddd; /* 鼠标放上去变灰 */
+            color: black;
+        }
+
+        /* 页面主要内容区域 */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto; /* 居中显示 */
+            background-color: white;
+            min-height: 400px; /* 保证页面不至于太短 */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">🏠 主页</a>
+        <a href="cv.html">📄 简历 (CV)</a>
+        <a href="project.html">🚀 项目展示</a>
+    </nav>
+
+    <div class="container">
+        <h1>欢迎来到我的个人网站</h1>
+        <p>你好！我是 Namjuryman。</p>
+        <p>这是我的主页，你可以点击上面的导航栏查看我的简历和项目。</p>
+    </div>
+
+</body>
+</html>
