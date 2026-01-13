@@ -8,95 +8,56 @@
         /* --- 基础设置 --- */
         body { font-family: 'Arial', sans-serif; margin: 0; background-color: #f4f4f4; color: #333; }
         
-        /* --- 导航栏 (保持不变) --- */
+        /* 导航栏 */
         nav { background-color: #333; overflow: hidden; padding: 10px 20px; position: sticky; top: 0; z-index: 1000; }
         nav a { float: left; display: block; color: white; padding: 14px 16px; text-decoration: none; font-size: 18px; }
         nav a:hover { background-color: #ddd; color: black; }
 
-        /* --- 时间轴核心样式 --- */
-        .timeline-area {
-            position: relative;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+        /* 时间轴布局 */
+        .timeline-area { position: relative; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .timeline-area::after { content: ''; position: absolute; width: 6px; background-color: #333; top: 0; bottom: 0; left: 50%; margin-left: -3px; }
 
-        /* 绘制中间的那条竖线 */
-        .timeline-area::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background-color: #333; /* 线条颜色 */
-            top: 0;
-            bottom: 0;
-            left: 50%; /* 居中 */
-            margin-left: -3px;
-        }
-
-        /* 项目容器 */
-        .container {
-            padding: 10px 40px;
-            position: relative;
-            background-color: inherit;
-            width: 50%; /* 占据一半宽度 */
-            box-sizing: border-box;
-        }
-
-        /* 左边的项目 */
+        /* 左右容器 */
+        .container { padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box; }
         .left { left: 0; }
-        /* 右边的项目 */
         .right { left: 50%; }
 
-        /* 时间轴上的圆点 */
-        .container::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -10px; /* 左侧圆点位置 */
-            background-color: white;
-            border: 4px solid #FF9F55; /* 圆点颜色 */
-            top: 25px;
-            border-radius: 50%;
-            z-index: 1;
-        }
-        /* 修正右侧圆点位置 */
+        /* 圆点 */
+        .container::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background-color: white; border: 4px solid #FF9F55; top: 25px; border-radius: 50%; z-index: 1; }
         .right::after { left: -10px; }
 
-        /* --- 卡片内容样式 --- */
+        /* --- 卡片样式 (重点修改部分) --- */
         .content {
             padding: 20px 30px;
             background-color: white;
-            position: relative;
             border-radius: 6px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 阴影效果 */
-            transition: transform 0.3s ease; /* 添加一点动画 */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* 鼠标放上去变小手 */
+            display: block; /* 让链接变成块级元素 */
+            text-decoration: none; /* 去掉下划线 */
+            color: inherit; /* 继承文字颜色 */
         }
 
         .content:hover {
-            transform: scale(1.02); /* 鼠标放上去会稍微放大 */
+            transform: translateY(-5px); /* 向上浮动 */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            background-color: #fffdf9; /* 稍微变色 */
         }
 
-        /* 年份标题 */
-        h2 { margin-top: 0; color: #333; font-size: 24px; }
+        h2 { margin-top: 0; color: #007bff; font-size: 24px; }
+        h3 { margin: 10px 0; color: #333; }
+        p { color: #666; font-size: 14px; }
         
-        /* 详情折叠功能 */
-        details { cursor: pointer; }
-        summary {
-            font-weight: bold;
-            color: #007bff;
-            margin-top: 10px;
-            list-style: none; /* 隐藏默认三角 */
-        }
-        summary::after { content: " 👇 点击查看详情"; font-size: 14px; }
-        details[open] summary::after { content: " 👆 收起"; }
-        
-        /* 手机端适配 (非常重要，否则手机上会乱) */
+        /* 提示文字 */
+        .click-hint { font-size: 12px; color: #999; margin-top: 10px; text-align: right; }
+
+        /* 手机适配 */
         @media screen and (max-width: 600px) {
-            .timeline-area::after { left: 31px; } /* 线条移到左边 */
+            .timeline-area::after { left: 31px; }
             .container { width: 100%; padding-left: 70px; padding-right: 25px; }
-            .container::after { left: 21px; } /* 圆点移到左边 */
-            .right { left: 0%; } /* 右侧元素回归左侧对齐 */
+            .container::after { left: 21px; }
+            .right { left: 0%; }
         }
     </style>
 </head>
@@ -111,47 +72,48 @@
     <div class="timeline-area">
 
         <div class="container right">
-            <div class="content">
-                <h2>2023-2024</h2>
-                <h3>FPGA Prototyping of a 32-bit RISC-V Processor</h3>
-                <p>探索 AI 与人类协作的新模式。</p>
-                <details>
-                    <summary>了解更多</summary>
-                    <hr>
-                    <p>这里是详细描述：<br>
-                    我计划在 2026 年启动这个项目...<br>
-                    使用的技术栈包括 Python, Transformers 等。</p>
-                    <img src="https://via.placeholder.com/400x200" alt="示例图" style="width:100%; border-radius:5px;">
-                </details>
-            </div>
+            <a href="p1.html" class="content">
+                <h2>2026</h2>
+                <h3>项目一：AI 未来规划</h3>
+                <p>探索大模型与人类协作的新边界。</p>
+                <div class="click-hint">点击查看详情 →</div>
+            </a>
         </div>
 
         <div class="container left">
-            <div class="content">
-                <h2>2023-2024</h2>
-                <h3>W-Band TE10 to HE11 Mode Converter via a Bragg Reflector</h3>
-                <p>从零开始学习 GitHub Pages 建站。</p>
-                <details>
-                    <summary>了解更多</summary>
-                    <hr>
-                    <p>通过学习 HTML 和 CSS，我成功搭建了自己的第一个静态网站。<br>
-                    解决了 404 错误，学会了嵌入 PDF。</p>
-                </details>
-            </div>
+            <a href="p2.html" class="content">
+                <h2>2025</h2>
+                <h3>项目二：数据可视化系统</h3>
+                <p>基于 Python 的大型数据看板。</p>
+                <div class="click-hint">点击查看详情 →</div>
+            </a>
         </div>
 
         <div class="container right">
-            <div class="content">
-                <h2>2025-2026</h2>
-                <h3>Low-Noise Compliant Clock Jitter Cleaner With Dual Loop PLLs</h3>
-                <p>基于数据分析的用户行为研究。</p>
-                <details>
-                    <summary>了解更多</summary>
-                    <hr>
-                    <p>这是我的本科毕业设计项目。<br>
-                    主要针对电商平台的用户习惯进行了建模分析。</p>
-                </details>
-            </div>
+            <a href="p3.html" class="content">
+                <h2>2024</h2>
+                <h3>项目三：个人网站搭建</h3>
+                <p>从零开始学习 GitHub Pages 与 HTML。</p>
+                <div class="click-hint">点击查看详情 →</div>
+            </a>
+        </div>
+        
+        <div class="container left">
+            <a href="p4.html" class="content">
+                <h2>2023</h2>
+                <h3>项目四：大学毕业设计</h3>
+                <p>用户行为分析模型研究。</p>
+                <div class="click-hint">点击查看详情 →</div>
+            </a>
+        </div>
+
+        <div class="container right">
+            <a href="p5.html" class="content">
+                <h2>2022</h2>
+                <h3>项目五：早期作品</h3>
+                <p>这是我早期的尝试...</p>
+                <div class="click-hint">点击查看详情 →</div>
+            </a>
         </div>
 
     </div>
